@@ -26,6 +26,7 @@ class _Icons extends _AssetsHolder {
   String get homeIcon => '$basePath/home_icon.svg';
   String get downloadingMenuIcon => '$basePath/downloading_menu_icon.svg';
   String get downloadedMenuIcon => '$basePath/downloaded_menu_icon.svg';
+  String get deleteIcon => '$basePath/delete.svg';
 }
 
 class _Images extends _AssetsHolder {
