@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'features/home/presentation/pages/home_page.dart';
 
@@ -9,18 +10,21 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'easy downloader',
-      theme: ThemeData(
-        
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'easy downloader',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: child,
+        );
+      },
+      child: const HomePage(),
     );
   }
 }
-
-
