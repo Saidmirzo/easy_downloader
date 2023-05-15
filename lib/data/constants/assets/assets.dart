@@ -23,9 +23,9 @@ class _Icons extends _AssetsHolder {
   String get pauseIcon => '$basePath/download_pause_icon.svg';
   String get downloadIcon => '$basePath/download_icon.svg';
   String get checkIcon => '$basePath/check_icon.svg';
-  String get homeIcon => '$basePath/home_icon.svg';
-  String get downloadingMenuIcon => '$basePath/downloading_menu_icon.svg';
-  String get downloadedMenuIcon => '$basePath/downloaded_menu_icon.svg';
+  String get home => '$basePath/home_icon.png';
+  String get downloading => '$basePath/downloading_icon.png';
+  String get downloaded => '$basePath/downloaded_icon.png';
 }
 
 class _Images extends _AssetsHolder {
