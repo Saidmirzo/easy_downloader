@@ -8,11 +8,13 @@ class DownloadingMenuStateWidget extends StatefulWidget {
   const DownloadingMenuStateWidget({super.key});
 
   @override
-  State<DownloadingMenuStateWidget> createState() => _DownloadingMenuStateWidgetState();
+  State<DownloadingMenuStateWidget> createState() =>
+      _DownloadingMenuStateWidgetState();
 }
 
-class _DownloadingMenuStateWidgetState extends State<DownloadingMenuStateWidget> {
-  Color indicatorColor = AppColors.bottomAppBarColor;
+class _DownloadingMenuStateWidgetState
+    extends State<DownloadingMenuStateWidget> {
+  Color indicatorColor = AppColors.primaryColor;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +25,7 @@ class _DownloadingMenuStateWidgetState extends State<DownloadingMenuStateWidget>
           child: CircularPercentIndicator(
             radius: 13.w,
             lineWidth: 3,
-            percent: 0.3,            
+            percent: 0.3,
             backgroundColor: indicatorColor.withOpacity(0.3),
             progressColor: indicatorColor,
             center: Container(

@@ -13,14 +13,14 @@ class DownLoadingContainerWidget extends StatelessWidget {
   String videoName;
   String image;
   String videoSize;
-  Widget function;
+  Widget widget;
   DownLoadingContainerWidget({
     Key? key,
     required this.description,
     required this.videoName,
     required this.image,
     required this.videoSize,
-    required this.function,
+    required this.widget,
   }) : super(key: key);
 
   Color white = AppColors.white;
@@ -30,6 +30,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 100.h,
+      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       decoration: BoxDecoration(
         color: white,
@@ -110,7 +111,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
             width: 8.w,
           ),
           const Spacer(),
-          function,
+          widget,
         ],
       ),
     );
