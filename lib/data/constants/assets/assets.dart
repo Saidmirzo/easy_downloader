@@ -23,6 +23,7 @@ class _Icons extends _AssetsHolder {
   String get pauseIcon => '$basePath/download_pause_icon.svg';
   String get downloadIcon => '$basePath/download_icon.svg';
   String get checkIcon => '$basePath/check_icon.svg';
+  String get delete => '$basePath/delete.svg';
   String get home => '$basePath/home_icon.png';
   String get downloading => '$basePath/downloading_icon.png';
   String get downloaded => '$basePath/downloaded_icon.png';

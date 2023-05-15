@@ -2,8 +2,6 @@ import 'package:easy_downloader/data/constants/assets/app_colors.dart';
 import 'package:easy_downloader/data/constants/assets/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -32,7 +30,7 @@ class DownloadedMenuStateWidget extends StatelessWidget {
             ],
           ),
           child: SvgPicture.asset(
-            Assets.icons.deleteIcon,
+            Assets.icons.delete,
             color: AppColors.textColor.shade25,
             width: 15,
             height: 20,
