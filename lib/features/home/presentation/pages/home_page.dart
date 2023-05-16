@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.only(top: 50.h),
       physics: const BouncingScrollPhysics(),
       itemCount: 10,
       itemBuilder: (context, index) => DownLoadingContainerWidget(
