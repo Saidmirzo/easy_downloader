@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
@@ -9,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../../data/constants/assets/app_colors.dart';
 import '../../../../data/constants/assets/app_text_styles.dart';
@@ -25,10 +27,27 @@ class CustomSearchBar extends StatefulWidget {
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
   int count = 0;
-  final String link =
-      "https://rr4---sn-01oxu-u5nk.googlevideo.com/videoplayback?expire=1684275642&ei=Wa1jZM-oOrKAsfIPmZat8AI&ip=52.41.36.82&id=o-AJw7RYRhJPaTVrhUeSuIszsc12G281gHZwLaqHtONyUp&itag=18&source=youtube&requiressl=yes&vprv=1&svpuc=1&mime=video%2Fmp4&ns=W2gsSBNH8Pa1etE9-CE1xhAN&gir=yes&clen=6050658&ratebypass=yes&dur=193.816&lmt=1684164165438204&fexp=24007246,24363393&c=WEB&txp=5319224&n=P7h5gBavs_gVzw&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRAIgdikLizFU-vMK50Z_0bSEnTOEoUxhz_pMPsA_k6QvvD0CIGy5H7iQ7e-BtCNaCzSFTFE46UFjghYwsJ1Ezn32u4m2&redirect_counter=1&rm=sn-nx5zs7z&req_id=fa8c8dc6666aa3ee&cms_redirect=yes&ipbypass=yes&mh=ZU&mip=213.230.112.179&mm=31&mn=sn-01oxu-u5nk&ms=au&mt=1684253603&mv=m&mvi=4&pl=23&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRQIhAPFDdH1xKJq6erq_WgKVvYCVbPzaSKr8VLyJGOduVzp9AiBta3nmBI6obrBukl1Woro_zTHkL_wWi-ct34G2HI5HuA%3D%3D";
+  String link =
+      "https://rr4---sn-01oxu-u5nk.googlevideo.com/videoplayback?expire=1684299005&ei=nQhkZPPUGs2BkgaIqbjQBQ&ip=52.41.36.82&id=o-AJgKhvN1VPgn2xzGuH5lMQjO7yu8Wzu3BkGnNn-z9D78&itag=18&source=youtube&requiressl=yes&vprv=1&svpuc=1&mime=video%2Fmp4&ns=2yvw1n2ZERc2twpLfWaTnuAN&gir=yes&clen=6050658&ratebypass=yes&dur=193.816&lmt=1684164165438204&fexp=24007246&c=WEB&txp=5319224&n=nT_8kGzSzUZkZg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgBsx9lVpTjBwqdUVfHIO7bBbyp4oCRW5VaQbHqSpNH74CIQCIbUJ00ryGqQnYJdY3Cfcbya5oYO4fbwESTQ8OzX-5eg%3D%3D&redirect_counter=1&rm=sn-nx5s67e&req_id=b52545d477a3ee&cms_redirect=yes&ipbypass=yes&mh=ZU&mip=213.230.112.179&mm=31&mn=sn-01oxu-u5nk&ms=au&mt=1684277104&mv=m&mvi=4&pl=23&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRAIgSVAa00b3Vv1siznQNPoGowffuiZTulma1yIbL5a1248CIFSSZ4JlzvXIFH3tezaXDYzsqeqtVKGFzw-hACOyDX9o";
+
+  Future<String> getLink() async {
+    try {
+      final result = await http.get(
+        Uri.parse(
+            "https://downloader-vsuw.onrender.com/download?URL=${textEditingController.text.isEmpty ? "https://www.youtube.com/watch?v=yOafhb6NS1k" : textEditingController.text}"),
+      );
+      if (result.statusCode == 200) {
+        final newLink = jsonDecode(result.body)["url"];
+        return newLink;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return link;
+  }
 
   void downloadFile() async {
+    link = await getLink();
     final status = await Permission.storage.request();
     if (status.isGranted) {
       final basePath = await getGallaryPath();
@@ -47,6 +66,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   ReceivePort receivePort = ReceivePort();
   int progress = 0;
+  TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
@@ -62,6 +82,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
     FlutterDownloader.registerCallback(downloadCallBack);
   }
+
   static downloadCallBack(id, status, progress) {
     SendPort sendPort = IsolateNameServer.lookupPortByName("downloadvideo")!;
     sendPort.send(progress);
@@ -103,8 +124,6 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     return directory!.path;
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -128,6 +147,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               ),
             ),
             child: TextField(
+              controller: textEditingController,
               cursorColor: AppColors.textColor.shade75,
               style: AppTextStyles.body16w4.copyWith(
                 color: AppColors.textColor.shade75,
@@ -147,6 +167,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               InkWell(
                 onTap: () {
                   downloadFile();
+                  // getLink();
                 },
                 child: Container(
                   height: 35.h,
