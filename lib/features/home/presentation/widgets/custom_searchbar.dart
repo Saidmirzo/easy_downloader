@@ -127,7 +127,6 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      // padding: EdgeInsets.symmetric(horizontal: 20.w),
       right: 20.w,
       left: 20.w,
       top: 0,
