@@ -9,8 +9,13 @@ abstract class EasyDownloaderState extends Equatable {
 
 class EasyDownloaderInitial extends EasyDownloaderState {}
 
-class EastyDoenloaderLoadingState extends EasyDownloaderState {}
+class EasyDownloaderLoadingState extends EasyDownloaderState {}
 
-class EastyDoenloaderLoadedState extends EasyDownloaderState {}
+class EasyDownloaderLoadedState extends EasyDownloaderState {
+  final VideoModel videoModel;
+  const EasyDownloaderLoadedState({required this.videoModel});
+  @override
+  List<Object> get props => [videoModel];
+}
 
-class EastyDoenloaderErrorState extends EasyDownloaderState {}
+class EasyDownloaderErrorState extends EasyDownloaderState {}

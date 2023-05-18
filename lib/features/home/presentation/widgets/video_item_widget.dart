@@ -1,29 +1,43 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_downloader/features/home/data/models/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../data/constants/assets/app_colors.dart';
 import '../../../../data/constants/assets/app_text_styles.dart';
-import '../../../../data/constants/assets/assets.dart';
 
 // ignore: must_be_immutable
-class DownLoadingContainerWidget extends StatelessWidget {
-  String description;
-  String videoName;
-  String image;
-  String videoSize;
-  Widget widget;
-  DownLoadingContainerWidget({
+class VideoItemWidget extends StatefulWidget {
+  final String description;
+  final String videoName;
+  final String videoSize;
+  final Widget widget;
+  final VideoModel videoModel;
+  VideoItemWidget({
     Key? key,
     required this.description,
     required this.videoName,
-    required this.image,
     required this.videoSize,
     required this.widget,
+    required this.videoModel,
   }) : super(key: key);
 
-  Color white = AppColors.white;
+  @override
+  State<VideoItemWidget> createState() => _VideoItemWidgetState();
+}
+
+class _VideoItemWidgetState extends State<VideoItemWidget> {
+  late VideoPlayerController videoPlayerController;
+  @override
+  void initState() {
+    super.initState();
+    videoPlayerController =
+        VideoPlayerController.network(widget.videoModel.url ?? '')
+          ..initialize().then((value) {
+            setState(() {});
+          });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +47,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
@@ -47,31 +61,42 @@ class DownLoadingContainerWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            height: 80.w,
-            width: 115.w,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.r),
-              image: DecorationImage(
-                image: AssetImage(
-                  image,
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
+          InkWell(
+            onTap: () {
+              if (videoPlayerController.value.isPlaying) {
+                videoPlayerController.pause();
+              }
+              videoPlayerController.play();
+            },
             child: Container(
-              height: 33.75.w,
-              width: 33.75.w,
+              height: 80.w,
+              width: 115.w,
+              clipBehavior: Clip.hardEdge,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9.75.r),
-                color: AppColors.textColor.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(20.r),
+                // image: DecorationImage(
+                //   image: AssetImage(
+                //     image,
+                //   ),
+                //   fit: BoxFit.cover,
+                // ),
               ),
-              child: SvgPicture.asset(
-                Assets.icons.pauseIcon,
-                color: white,
-              ),
+              child: VideoPlayer(videoPlayerController),
+              // child: ,
+              // child: Container(
+              //   height: 33.75.w,
+              //   width: 33.75.w,
+              //   alignment: Alignment.center,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(9.75.r),
+              //     color: AppColors.textColor.withOpacity(0.4),
+              //   ),
+              //   child: SvgPicture.asset(
+              //     Assets.icons.pauseIcon,
+              //     color: white,
+              //   ),
+              // ),
             ),
           ),
           SizedBox(
@@ -82,7 +107,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                description,
+                widget.description,
                 style: AppTextStyles.body12w4.copyWith(
                   color: AppColors.textColor.shade25,
                 ),
@@ -91,7 +116,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
                 height: 2.h,
               ),
               Text(
-                videoName,
+                widget.videoName,
                 style: AppTextStyles.body16w7.copyWith(
                   color: AppColors.textColor.shade75,
                 ),
@@ -100,7 +125,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
                 height: 2.h,
               ),
               Text(
-                videoSize,
+                widget.videoSize,
                 style: AppTextStyles.body12w4.copyWith(
                   color: AppColors.textColor,
                 ),
@@ -111,7 +136,7 @@ class DownLoadingContainerWidget extends StatelessWidget {
             width: 8.w,
           ),
           const Spacer(),
-          widget,
+          widget.widget,
         ],
       ),
     );

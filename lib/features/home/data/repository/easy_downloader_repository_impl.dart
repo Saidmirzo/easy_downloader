@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:easy_downloader/core/errors/errors.dart';
 import 'package:easy_downloader/core/errors/failures.dart';
 import 'package:easy_downloader/core/netwok/network_info.dart';
-import 'package:easy_downloader/features/home/data/datasource/download_video_data_source.dart';
+import 'package:easy_downloader/features/home/data/datasource/download_video_remote_data_source.dart';
 import 'package:easy_downloader/features/home/data/models/video_model.dart';
 import 'package:easy_downloader/features/home/domain/repository/easy_downloader_repository.dart';
 import 'package:http/http.dart';

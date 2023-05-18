@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_downloader/features/home/data/models/video_model.dart';
 import 'package:easy_downloader/features/home/domain/usecases/download_video_usecase.dart';
 import 'package:easy_downloader/features/home/domain/usecases/get_video_info_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -17,10 +18,11 @@ class EasyDownloaderBloc
     on<EasyDownloaderEvent>((event, emit) {});
     on<GetVideoInfoEvent>(
       (event, emit) async {
+        emit(EasyDownloaderLoadingState());
         final video = await getVideoInfoUseCase.call(Params(link: event.link));
         video.fold(
-          (l) => emit(EastyDoenloaderErrorState()),
-          (r) => emit(EastyDoenloaderLoadedState()),
+          (l) => emit(EasyDownloaderErrorState()),
+          (r) => emit(EasyDownloaderLoadedState(videoModel: r)),
         );
       },
     );

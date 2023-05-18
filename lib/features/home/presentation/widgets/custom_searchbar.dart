@@ -4,7 +4,9 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:easy_downloader/features/home/presentation/bloc/easy_downloader/easy_downloader_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,7 +31,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   int count = 0;
   String link =
       "https://rr4---sn-01oxu-u5nk.googlevideo.com/videoplayback?expire=1684299005&ei=nQhkZPPUGs2BkgaIqbjQBQ&ip=52.41.36.82&id=o-AJgKhvN1VPgn2xzGuH5lMQjO7yu8Wzu3BkGnNn-z9D78&itag=18&source=youtube&requiressl=yes&vprv=1&svpuc=1&mime=video%2Fmp4&ns=2yvw1n2ZERc2twpLfWaTnuAN&gir=yes&clen=6050658&ratebypass=yes&dur=193.816&lmt=1684164165438204&fexp=24007246&c=WEB&txp=5319224&n=nT_8kGzSzUZkZg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Csvpuc%2Cmime%2Cns%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgBsx9lVpTjBwqdUVfHIO7bBbyp4oCRW5VaQbHqSpNH74CIQCIbUJ00ryGqQnYJdY3Cfcbya5oYO4fbwESTQ8OzX-5eg%3D%3D&redirect_counter=1&rm=sn-nx5s67e&req_id=b52545d477a3ee&cms_redirect=yes&ipbypass=yes&mh=ZU&mip=213.230.112.179&mm=31&mn=sn-01oxu-u5nk&ms=au&mt=1684277104&mv=m&mvi=4&pl=23&lsparams=ipbypass,mh,mip,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRAIgSVAa00b3Vv1siznQNPoGowffuiZTulma1yIbL5a1248CIFSSZ4JlzvXIFH3tezaXDYzsqeqtVKGFzw-hACOyDX9o";
-
+  String linkYouTube = "https://www.youtube.com/watch?v=yOafhb6NS1k";
   Future<String> getLink() async {
     try {
       final result = await http.get(
@@ -165,8 +167,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
             children: [
               InkWell(
                 onTap: () {
-                  downloadFile();
+                  // downloadFile();
                   // getLink();
+                  context
+                      .read<EasyDownloaderBloc>()
+                      .add(GetVideoInfoEvent(link:textEditingController.text.isNotEmpty?textEditingController.text: linkYouTube));
                 },
                 child: Container(
                   height: 35.h,
