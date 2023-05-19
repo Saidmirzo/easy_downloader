@@ -65,8 +65,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
             onTap: () {
               if (videoPlayerController.value.isPlaying) {
                 videoPlayerController.pause();
+              } else {
+                videoPlayerController.play();
               }
-              videoPlayerController.play();
             },
             child: Container(
               height: 80.w,
@@ -140,5 +141,11 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    super.dispose();
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:dio/dio.dart';
 import 'package:easy_downloader/features/home/presentation/bloc/easy_downloader/easy_downloader_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -168,10 +169,16 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               InkWell(
                 onTap: () {
                   // downloadFile();
-                  // getLink();
+                  // getLink().then((value) {
+                  //   log(value.toString());
+                  // });
+
                   context
                       .read<EasyDownloaderBloc>()
                       .add(GetVideoInfoEvent(link:textEditingController.text.isNotEmpty?textEditingController.text: linkYouTube));
+                  // final dio = Dio();
+                  // final response = await dio.get("https://github.com/");
+                  // log(response.data.toString());
                 },
                 child: Container(
                   height: 35.h,

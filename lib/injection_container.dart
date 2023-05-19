@@ -6,22 +6,23 @@ import 'package:easy_downloader/features/home/domain/usecases/get_video_info_use
 import 'package:easy_downloader/features/home/presentation/bloc/download_to_file/downlaod_to_file_bloc.dart';
 import 'package:easy_downloader/features/home/presentation/bloc/easy_downloader/easy_downloader_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'core/netwok/network_info.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
   //! Features Sign In BLoc
 
   //Bloc
-  sl.registerFactory(() =>DownlaodToFileBloc());
-  sl.registerLazySingleton(
-      () => SaveToFileEvent());
+  sl.registerFactory(() => DownlaodToFileBloc());
+  sl.registerLazySingleton(() => SaveToFileEvent());
   sl.registerFactory(
-    () => EasyDownloaderBloc(downloadVideoUseCase: sl(), getVideoInfoUseCase: sl()),
+    () => EasyDownloaderBloc(
+      downloadVideoUseCase: sl(),
+      getVideoInfoUseCase: sl(),
+    ),
   );
   sl.registerLazySingleton(() => GetVideoInfoEvent(link: sl()));
   //Use cases
@@ -33,13 +34,15 @@ Future<void> init() async {
   );
 
   //Repositoyies
-  sl.registerLazySingleton<EasyDownloaderRepository>(() => EasyDownloaderRepositoryImpl(networkInfo: sl(), downloadVideoRemoteDataSource: sl()));
-  
+  sl.registerLazySingleton<EasyDownloaderRepository>(
+      () => EasyDownloaderRepositoryImpl(
+            networkInfo: sl(),
+            downloadVideoRemoteDataSource: sl(),
+          ));
 
   // Data Sourse
   sl.registerLazySingleton<DownloadVideoRemoteDataSource>(
       () => DownloadVideoRemoteDataSourceImpl(client: sl()));
-  
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(

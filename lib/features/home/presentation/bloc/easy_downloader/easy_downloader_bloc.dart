@@ -13,8 +13,11 @@ class EasyDownloaderBloc
   final DownloadVideoUseCase downloadVideoUseCase;
 
   EasyDownloaderBloc(
-      {required this.downloadVideoUseCase, required this.getVideoInfoUseCase})
-      : super(EasyDownloaderInitial()) {
+    {
+    required this.downloadVideoUseCase,
+    required this.getVideoInfoUseCase,
+  }
+  ) : super(EasyDownloaderInitial()) {
     on<EasyDownloaderEvent>((event, emit) {});
     on<GetVideoInfoEvent>(
       (event, emit) async {

@@ -1,11 +1,7 @@
-import 'dart:ui';
 
-import 'package:easy_downloader/data/constants/assets/app_colors.dart';
-import 'package:easy_downloader/data/constants/assets/assets.dart';
 import 'package:easy_downloader/features/home/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:easy_downloader/features/home/presentation/widgets/custom_searchbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'downloaded.dart';
 import 'downloading.dart';
