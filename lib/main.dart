@@ -11,7 +11,7 @@ import 'injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize();
+  await FlutterDownloader.initialize(ignoreSsl: true);
   await di.init();
   runApp(const MyApp());
 }
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => sl<DownlaodToFileBloc>(),
+              create: (context) => sl<DownloadToFileBloc>(),
             ),
             BlocProvider(
               create: (context) => sl<EasyDownloaderBloc>(),

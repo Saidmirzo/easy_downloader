@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class DownloadingMenuStateWidget extends StatefulWidget {
-  const DownloadingMenuStateWidget({super.key});
+class CustomProgressIndicator extends StatefulWidget {
+  const CustomProgressIndicator({super.key, required this.progress});
+  final int progress;
 
   @override
-  State<DownloadingMenuStateWidget> createState() =>
-      _DownloadingMenuStateWidgetState();
+  State<CustomProgressIndicator> createState() =>
+      _CustomProgressIndicatorState();
 }
 
-class _DownloadingMenuStateWidgetState
-    extends State<DownloadingMenuStateWidget> {
+class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
   Color indicatorColor = AppColors.primaryColor;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _DownloadingMenuStateWidgetState
           child: CircularPercentIndicator(
             radius: 13.w,
             lineWidth: 3,
-            percent: 0.3,
+            percent: widget.progress/100,
             backgroundColor: indicatorColor.withOpacity(0.3),
             progressColor: indicatorColor,
             center: Container(
@@ -42,7 +42,7 @@ class _DownloadingMenuStateWidgetState
           height: 5.h,
         ),
         Text(
-          "54%",
+          "${widget.progress}%",
           style: AppTextStyles.body10w4.copyWith(
             color: AppColors.textColor.shade50,
           ),

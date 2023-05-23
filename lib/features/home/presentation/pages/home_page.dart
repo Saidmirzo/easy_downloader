@@ -1,15 +1,11 @@
-import 'dart:developer';
 
 import 'package:easy_downloader/data/constants/assets/app_colors.dart';
 import 'package:easy_downloader/data/constants/assets/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:video_player/video_player.dart';
 
 import '../bloc/easy_downloader/easy_downloader_bloc.dart';
 import '../widgets/video_item_widget.dart';
-import '../widgets/switch_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-   
     // return const Center(
     //   child: Text('Home Page'),
     // );
@@ -37,15 +32,13 @@ class _HomePageState extends State<HomePage> {
               VideoItemWidget(
                 videoModel: state.videoModel,
                 description: "The SpongeBob Movie",
-                videoName: state.videoModel.url!.substring(10, 20) ?? "",
+                videoName: state.videoModel.url != null
+                    ? state.videoModel.url!.substring(8, 35)
+                    : "Unknown",
                 videoSize: "20 Mb",
-                widget: switchState(state: DownloadState.downloading),
               ),
-              // VideoPlayer(videoPlayerController),
-
             ],
           );
-
         }
         if (state is EasyDownloaderLoadingState) {
           return const Center(

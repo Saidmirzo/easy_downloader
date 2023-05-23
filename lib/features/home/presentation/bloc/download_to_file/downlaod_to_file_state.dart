@@ -7,10 +7,15 @@ abstract class DownlaodToFileState extends Equatable {
   List<Object> get props => [];
 }
 
-class DownlaodToFileInitial extends DownlaodToFileState {}
+class DownloadToFileInitial extends DownlaodToFileState {}
 
-class DownlaodToFileLoadingState extends DownlaodToFileState {}
+class DownloadToFileLoadingState extends DownlaodToFileState {
+  final int progress;
+  const DownloadToFileLoadingState({required this.progress});
+  @override
+  List<Object> get props => [];
+}
 
-class DownlaodToFileLoadedState extends DownlaodToFileState {}
+class DownloadToFileLoadedState extends DownlaodToFileState {}
 
-class DownlaodToFileErrorState extends DownlaodToFileState {}
+class DownloadToFileErrorState extends DownlaodToFileState {}

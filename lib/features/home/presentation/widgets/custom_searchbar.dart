@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 
-import 'package:dio/dio.dart';
 import 'package:easy_downloader/features/home/presentation/bloc/easy_downloader/easy_downloader_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +56,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       log(basePath);
 
       final id = await FlutterDownloader.enqueue(
-        url: link,
+        url: await getLink(),
         savedDir: basePath,
         fileName: "filename($count).mp4",
       );
@@ -75,15 +74,15 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   void initState() {
     super.initState();
 
-    IsolateNameServer.registerPortWithName(
-        receivePort.sendPort, "downloadvideo");
-    receivePort.listen((message) {
-      setState(() {
-        progress = message;
-      });
-    });
+    // IsolateNameServer.registerPortWithName(
+    //     receivePort.sendPort, "downloadvideo");
+    // receivePort.listen((message) {
+    //   setState(() {
+    //     progress = message;
+    //   });
+    // });
 
-    FlutterDownloader.registerCallback(downloadCallBack);
+    // FlutterDownloader.registerCallback(downloadCallBack);
   }
 
   static downloadCallBack(id, status, progress) {
@@ -173,16 +172,17 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                   //   log(value.toString());
                   // });
 
-                  context
-                      .read<EasyDownloaderBloc>()
-                      .add(GetVideoInfoEvent(link:textEditingController.text.isNotEmpty?textEditingController.text: linkYouTube));
+                  context.read<EasyDownloaderBloc>().add(GetVideoInfoEvent(
+                      link: textEditingController.text.isNotEmpty
+                          ? textEditingController.text
+                          : linkYouTube));
                   // final dio = Dio();
                   // final response = await dio.get("https://github.com/");
                   // log(response.data.toString());
                 },
                 child: Container(
-                  height: 35.h,
-                  width: 35.h,
+                  height: 40.h,
+                  width: 40.h,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: AppColors.primaryColor,
@@ -198,12 +198,12 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                   child: SvgPicture.asset(Assets.icons.searchIcon),
                 ),
               ),
-              Text(
-                progress.toString(),
-                style: AppTextStyles.body14w5.copyWith(
-                  color: AppColors.textColor,
-                ),
-              ),
+              // Text(
+              //   progress.toString(),
+              //   style: AppTextStyles.body14w5.copyWith(
+              //     color: AppColors.textColor,
+              //   ),
+              // ),
             ],
           )
         ],

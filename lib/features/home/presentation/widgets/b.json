@@ -1,0 +1,20 @@
+{
+    "id": 7232590933722729000,
+    "title": "Downloaded from TiklyDown API",
+    "stats": {
+        "likes": "58.7 K",
+        "comment": 211,
+        "playCount": "712 K",
+        "saveCount": 2542
+    },
+    "video": {
+        "noWatermark": "https://v16m-default.akamaized.net/17f2b6003a55c2673074bf7e033ffbb2/64680ed3/video/tos/useast2a/tos-useast2a-ve-0068c001/ownxfybUg88qIeGIbqPCAeSkDvICUQbgjj6n8n/?a=0&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=1944&bt=972&cs=0&ds=6&ft=ArCXsB8vq8Zmo2QGac_vjsvYM8hLrus&mime_type=video_mp4&qs=0&rc=Njs1OTk7ODc8NDozZ2g1NkBpM3hzZTo6ZjpvazMzNzczM0A1YjIxMC9eXl8xXzNjMDMwYSM2MGNwcjRnMmNgLS1kMTZzcw%3D%3D&l=20230519180509D589B779DEEF97622159&btag=e00080000",
+        "watermark": "https://v16m-default.akamaized.net/883f5b6897015e4eccdb7c1427437f0a/64680ed3/video/tos/useast2a/tos-useast2a-ve-0068c004/o8zIkbqfjgTjnSGog8PDAeCSUCveQY1bI8Ux6q/?a=0&ch=0&cr=0&dr=0&lr=all&cd=0%7C0%7C0%7C0&cv=1&br=2030&bt=1015&cs=0&ds=3&ft=ArCXsB8vq8Zmo2QGac_vjsvYM8hLrus&mime_type=video_mp4&qs=0&rc=aDhlOmU0aWVlMzU3MzY5N0BpM3hzZTo6ZjpvazMzNzczM0BgLS9gMi4vNTYxNV4wLl4vYSM2MGNwcjRnMmNgLS1kMTZzcw%3D%3D&l=20230519180509D589B779DEEF97622159&btag=e00080000",
+        "width": 1080,
+        "height": 1920,
+        "ratio": "540p"
+    },
+    "music": {
+        "play_url": "https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7201132724391152389.mp3"
+    }
+}
