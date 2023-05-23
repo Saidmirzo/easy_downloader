@@ -1,10 +1,21 @@
-class VideoModel {
+import 'package:hive/hive.dart';
+part 'video_model.g.dart';
+
+@HiveType(typeId: 0)
+class VideoModel extends HiveObject {
+  @HiveField(0)
   String? url;
+  @HiveField(1)
   int? size;
+  @HiveField(2)
   String? quality;
+  @HiveField(3)
   int? witdth;
+  @HiveField(4)
   int? height;
+  @HiveField(5)
   int? fps;
+  @HiveField(6)
   String? container;
 
   VideoModel(

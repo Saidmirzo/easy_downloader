@@ -77,7 +77,6 @@ class DownloadToFileBloc
   }
 
   void _bindBackgroundIsolate() {
-    log('binding');
     final isSuccsess = IsolateNameServer.registerPortWithName(
         receivePort.sendPort, "downloadvideo");
     if (!isSuccsess) {
@@ -85,12 +84,10 @@ class DownloadToFileBloc
       _bindBackgroundIsolate();
       return;
     } else {
-      log('LISTEN');
       receivePort.listen((message) {
         final id = message[0];
         final status = message[1];
         final progress = message[2];
-        log(message.toString());
 
         if (status == 4||status==5) {
           add(EmitErrorEvent());

@@ -1,11 +1,10 @@
-
 import 'package:easy_downloader/data/constants/assets/app_colors.dart';
 import 'package:easy_downloader/data/constants/assets/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/easy_downloader/easy_downloader_bloc.dart';
-import '../widgets/video_item_widget.dart';
+import '../widgets/custom_video_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,14 +28,7 @@ class _HomePageState extends State<HomePage> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              VideoItemWidget(
-                videoModel: state.videoModel,
-                description: "The SpongeBob Movie",
-                videoName: state.videoModel.url != null
-                    ? state.videoModel.url!.substring(8, 35)
-                    : "Unknown",
-                videoSize: "20 Mb",
-              ),
+              CustomVideoCard(videoModel: state.videoModel),
             ],
           );
         }

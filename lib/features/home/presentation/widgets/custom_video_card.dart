@@ -15,24 +15,18 @@ import '../../../../data/constants/assets/app_colors.dart';
 import '../../../../data/constants/assets/app_text_styles.dart';
 
 // ignore: must_be_immutable
-class VideoItemWidget extends StatefulWidget {
-  final String description;
-  final String videoName;
-  final String videoSize;
+class CustomVideoCard extends StatefulWidget {
   final VideoModel videoModel;
-  const VideoItemWidget({
+  const CustomVideoCard({
     Key? key,
-    required this.description,
-    required this.videoName,
-    required this.videoSize,
     required this.videoModel,
   }) : super(key: key);
 
   @override
-  State<VideoItemWidget> createState() => _VideoItemWidgetState();
+  State<CustomVideoCard> createState() => _CustomVideoCardState();
 }
 
-class _VideoItemWidgetState extends State<VideoItemWidget> {
+class _CustomVideoCardState extends State<CustomVideoCard> {
   late VideoPlayerController videoPlayerController;
   @override
   void initState() {
@@ -90,7 +84,7 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.description,
+                      'The SpongeBob Movie',
                       style: AppTextStyles.body12w4.copyWith(
                         color: AppColors.textColor.shade25,
                       ),
@@ -99,7 +93,9 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                       height: 2.h,
                     ),
                     Text(
-                      widget.videoName,
+                      widget.videoModel.url != null
+                          ? widget.videoModel.url!.substring(8, 35)
+                          : "Unknown",
                       style: AppTextStyles.body16w7.copyWith(
                         color: AppColors.textColor.shade75,
                       ),
@@ -108,7 +104,7 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                       height: 2.h,
                     ),
                     Text(
-                      widget.videoSize,
+                      '6.05 MB',
                       style: AppTextStyles.body12w4.copyWith(
                         color: AppColors.textColor,
                       ),
@@ -132,9 +128,20 @@ class _VideoItemWidgetState extends State<VideoItemWidget> {
                       return CustomProgressIndicator(progress: state.progress);
                     }
                     if (state is DownloadToFileLoadedState) {
-                      return const CustomDeleteButton();
+                      return CustomDeleteButton(
+                        onTap: () {},
+                      );
                     } else {
-                      return const SizedBox.shrink();
+                      return CustomDeleteButton(
+                        onTap: () {
+                          context.read<DownloadToFileBloc>().add(
+                                SaveToFileEvent(videoModel: widget.videoModel),
+                              );
+                        },
+                        widget: const Icon(
+                          Icons.refresh_rounded,
+                        ),
+                      );
                     }
                   },
                 ),

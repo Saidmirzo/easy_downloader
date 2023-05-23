@@ -2,22 +2,26 @@ import 'package:bloc/bloc.dart';
 import 'package:easy_downloader/features/home/data/models/video_model.dart';
 import 'package:easy_downloader/features/home/domain/usecases/download_video_usecase.dart';
 import 'package:easy_downloader/features/home/domain/usecases/get_video_info_usecase.dart';
+import 'package:easy_downloader/features/home/domain/usecases/save_to_box_usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 part 'easy_downloader_event.dart';
 part 'easy_downloader_state.dart';
+
+ String boxName="history";
 
 class EasyDownloaderBloc
     extends Bloc<EasyDownloaderEvent, EasyDownloaderState> {
   final GetVideoInfoUseCase getVideoInfoUseCase;
   final DownloadVideoUseCase downloadVideoUseCase;
+  final SaveToBoxUseCase saveToBoxUseCase;
 
-  EasyDownloaderBloc(
-    {
+  EasyDownloaderBloc({
+    required this.saveToBoxUseCase,
     required this.downloadVideoUseCase,
     required this.getVideoInfoUseCase,
-  }
-  ) : super(EasyDownloaderInitial()) {
+  }) : super(EasyDownloaderInitial()) {
     on<EasyDownloaderEvent>((event, emit) {});
     on<GetVideoInfoEvent>(
       (event, emit) async {
@@ -25,7 +29,10 @@ class EasyDownloaderBloc
         final video = await getVideoInfoUseCase.call(Params(link: event.link));
         video.fold(
           (l) => emit(EasyDownloaderErrorState()),
-          (r) => emit(EasyDownloaderLoadedState(videoModel: r)),
+          (videoModel) {
+            saveToBoxUseCase.call(BoxParams(boxName: boxName, value: videoModel));
+            emit(EasyDownloaderLoadedState(videoModel: videoModel));
+          },
         );
       },
     );
