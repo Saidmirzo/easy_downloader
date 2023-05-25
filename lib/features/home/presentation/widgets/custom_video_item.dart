@@ -7,13 +7,16 @@ import 'package:video_player/video_player.dart';
 import '../../../../data/constants/assets/app_colors.dart';
 import '../../../../data/constants/assets/app_text_styles.dart';
 import '../bloc/download_to_file/downlaod_to_file_bloc.dart';
+import '../bloc/history/history_bloc.dart';
 import 'custom_delete_button.dart';
 import 'custom_progress_indicator.dart';
 import 'download_button.dart';
 
 class CustomVideoItem extends StatefulWidget {
-  const CustomVideoItem({super.key, required this.videoModel});
+  const CustomVideoItem(
+      {super.key, required this.videoModel, required this.index});
   final VideoModel videoModel;
+  final int index;
 
   @override
   State<CustomVideoItem> createState() => _CustomVideoItemState();
@@ -113,7 +116,11 @@ class _CustomVideoItemState extends State<CustomVideoItem> {
               }
               if (state is DownloadToFileLoadedState) {
                 return CustomDeleteButton(
-                  onTap: () {},
+                  onTap: () {
+                    context
+                        .read<HistoryBloc>()
+                        .add(DeleteFromBoxEvent(index: widget.index));
+                  },
                 );
               } else {
                 return CustomDeleteButton(
@@ -129,16 +136,6 @@ class _CustomVideoItemState extends State<CustomVideoItem> {
               }
             },
           ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: [
-
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

@@ -5,12 +5,13 @@ import 'package:hive/hive.dart';
 abstract class SaveToHiveLocalDataSource {
   Future<void> saveToBox(String boxName, VideoModel value);
   Future<List<VideoModel>> getToBox(String boxName);
+  Future<void> deleteFromoBox(String boxName, int index);
 }
 
 class SaveToHiveLoacalDataSourceImpl implements SaveToHiveLocalDataSource {
   @override
   Future<List<VideoModel>> getToBox(String boxName) async {
-    Box<VideoModel> box=await Hive.openBox(boxName);
+    Box<VideoModel> box = await Hive.openBox(boxName);
     if (Hive.isBoxOpen(boxName)) {
       box = Hive.box(boxName);
       final list = box.values.toList();
@@ -30,5 +31,16 @@ class SaveToHiveLoacalDataSourceImpl implements SaveToHiveLocalDataSource {
     }
     await box.add(value);
     // await box.put('list', value);
+  }
+
+  @override
+  Future<void> deleteFromoBox(String boxName, int index) async {
+    Box<VideoModel> box;
+    if (!Hive.isBoxOpen(boxName)) {
+      box = await Hive.openBox<VideoModel>(boxName);
+    } else {
+      box = Hive.box(boxName);
+    }
+    await box.deleteAt(index);
   }
 }

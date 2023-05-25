@@ -7,8 +7,11 @@ abstract class HistoryEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetToBoxEvent extends HistoryEvent{
-  
-}
-class SaveToBoxEvent extends HistoryEvent{}
+class GetToBoxEvent extends HistoryEvent {}
 
+class SaveToBoxEvent extends HistoryEvent {}
+
+class DeleteFromBoxEvent extends HistoryEvent {
+  final int index;
+  const DeleteFromBoxEvent({required this.index});
+}

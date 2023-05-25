@@ -33,6 +33,7 @@ class _MainPageState extends State<MainPage> {
         child: Stack(
           children: [
             PageView(
+              
               controller: pageController,
               children: const [
                 HomePage(),

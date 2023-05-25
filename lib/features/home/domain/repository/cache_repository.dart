@@ -6,4 +6,5 @@ import '../../../../core/errors/failures.dart';
 abstract class CacheRepository {
   Future<Either<Failure,List<VideoModel>>> getLocalData(String boxName) ;
   Future<Either<Failure,String>> setLocalData(String boxName , VideoModel value) ;
+  Future<Either<Failure,String>> deleteFromLocalData(String boxName , int index) ;
 }

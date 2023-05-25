@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../bloc/history/history_bloc.dart';
-import '../widgets/custom_video_card.dart';
 
 class DownloadingPage extends StatefulWidget {
   const DownloadingPage({super.key});
@@ -15,7 +14,8 @@ class DownloadingPage extends StatefulWidget {
   State<DownloadingPage> createState() => _DownloadingPageState();
 }
 
-class _DownloadingPageState extends State<DownloadingPage> {
+class _DownloadingPageState extends State<DownloadingPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -24,6 +24,7 @@ class _DownloadingPageState extends State<DownloadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (context, state) {
         if (state is HistoryLoadingState) {
@@ -36,7 +37,7 @@ class _DownloadingPageState extends State<DownloadingPage> {
             itemCount: state.listVideo.length,
             itemBuilder: (context, index) {
               final item = state.listVideo[index];
-              return CustomVideoItem(videoModel: item);
+              return CustomVideoItem(videoModel: item, index: index);
             },
           );
         } else {
@@ -51,4 +52,7 @@ class _DownloadingPageState extends State<DownloadingPage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

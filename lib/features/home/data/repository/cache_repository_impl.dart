@@ -27,4 +27,15 @@ class CacheRepositoryImpl implements CacheRepository {
       return Left(CacheFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteFromLocalData(
+      String boxName, int index) async {
+    try {
+      await saveToHiveLocalDataSource.deleteFromoBox(boxName, index);
+      return const Right('');
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
 }

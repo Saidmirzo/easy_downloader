@@ -19,6 +19,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'core/netwok/network_info.dart';
 import 'package:http/http.dart' as http;
 
+import 'features/home/domain/usecases/delete_from_box_usecase.dart';
+
 final sl = GetIt.instance;
 Future<void> init() async {
   //! Features Sign In BLoc
@@ -37,9 +39,10 @@ Future<void> init() async {
     ),
   );
   sl.registerLazySingleton(() => GetVideoInfoEvent(link: sl()));
-  sl.registerFactory(() => HistoryBloc(getToBoxUseCase: sl()));
+  sl.registerFactory(() => HistoryBloc(getToBoxUseCase: sl(), deleteFromBoxUseCase: sl()));
   sl.registerLazySingleton(() => GetToBoxEvent());
   sl.registerLazySingleton(() => SaveToBoxEvent());
+  sl.registerLazySingleton(() => DeleteFromBoxEvent(index: sl()));
   //Use cases
   sl.registerLazySingleton(() => DownloadToFileUseCase());
 
@@ -55,6 +58,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => GetToBoxUseCase(cacheRepository: sl()));
   sl.registerLazySingleton(() => SaveToBoxUseCase(cacheRepository: sl()));
+  sl.registerLazySingleton(() => DeleteFromBoxUseCase(cacheRepository: sl()));
 
   //Repositoyies
   sl.registerLazySingleton<EasyDownloaderRepository>(
